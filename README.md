@@ -6,4 +6,4 @@ python main.py
 python inverse_problem_solver_AAPM_3d_total.py 
 
 
-![contents](./system.pdf)
+![system](https://github.com/Xlab2024/TWCT/blob/main/system.jpg?raw=true)
