@@ -1,0 +1,18 @@
+name: diffusion-mbir
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - numpy
+  - matplotlib
+  - scikit-image
+  - sporco
+  - tqdm
+  - ninja
+  - pytorch::pytorch
+  - pytorch::torchvision
+  - tensorboard
+  - pip
+  - pip:
+      - ml_collections
+      - ninja

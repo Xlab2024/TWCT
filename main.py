@@ -1,0 +1,54 @@
+
+"""Training and evaluation"""
+import os
+from pathlib import Path
+import astra
+from absl import app
+from absl import flags
+from ml_collections.config_flags import config_flags
+import logging
+
+import run_lib
+
+FLAGS = flags.FLAGS
+
+config_flags.DEFINE_config_file(
+  "config",  "configs/ve/AAPM_256_ncsnpp_continuous.py", "Training configuration.", lock_config=True)
+flags.DEFINE_string("workdir", "/root/TWCT/TWCT/workdir/AAPM256", "Work directory.")
+flags.DEFINE_enum("mode", "train", ["train", "train_regression", "eval"], "Running mode: train, train_regression, or eval")
+flags.DEFINE_string("eval_folder", "/root/TWCT/TWCT/res",
+                    "The folder name for storing evaluation results")
+flags.mark_flags_as_required(["workdir", "config", "mode"])
+
+
+
+def main(argv):
+  # FLAGS.config = "configs/ve/AAPM_256_ncsnpp_continuous.py"
+  # FLAGS.eval_folder = "eval/AAPM256"
+  # FLAGS.mode = "train"
+  # FLAGS.workdir = "workdir/AAPM256"
+  print(FLAGS.config)
+  if FLAGS.mode == "train" or FLAGS.mode == "train_regression":
+    # Create the working directory
+    Path(FLAGS.workdir).mkdir(parents=True, exist_ok=True)
+    # Set logger so that it outputs to both console and file
+    # Make logging work for both disk and Google Cloud Storage
+    gfile_stream = open(os.path.join(FLAGS.workdir, 'stdout.txt'), 'w')
+    handler = logging.StreamHandler(gfile_stream)
+    formatter = logging.Formatter('%(levelname)s - %(filename)s - %(asctime)s - %(message)s')
+    handler.setFormatter(formatter)
+    logger = logging.getLogger()
+    logger.addHandler(handler)
+    logger.setLevel('INFO')
+    # Run the training pipeline
+    if FLAGS.mode == "train":
+      run_lib.train(FLAGS.config, FLAGS.workdir)
+  elif FLAGS.mode == "eval":
+    # Run the evaluation pipeline
+    run_lib.evaluate(FLAGS.config, FLAGS.workdir, FLAGS.eval_folder)
+  else:
+    raise ValueError(f"Mode {FLAGS.mode} not recognized.")
+
+
+if __name__ == "__main__":
+  app.run(main)
