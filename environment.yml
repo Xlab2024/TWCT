@@ -1,4 +1,4 @@
-name: diffusion-mbir
+name: TWCT
 channels:
   - conda-forge
 dependencies:
