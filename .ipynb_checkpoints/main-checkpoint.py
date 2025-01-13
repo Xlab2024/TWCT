@@ -28,9 +28,9 @@ FLAGS = flags.FLAGS
 
 config_flags.DEFINE_config_file(
   "config",  "configs/ve/AAPM_256_ncsnpp_continuous.py", "Training configuration.", lock_config=True)
-flags.DEFINE_string("workdir", "C:/Users/Admin/Desktop/MBIR/DiffusionMBIR-main/workdir/AAPM256", "Work directory.")
+flags.DEFINE_string("workdir", "/root/TWCT/TWCT/workdir/AAPM256", "Work directory.")
 flags.DEFINE_enum("mode", "train", ["train", "train_regression", "eval"], "Running mode: train, train_regression, or eval")
-flags.DEFINE_string("eval_folder", "C:/Users/Admin/Desktop/MBIR/DiffusionMBIR-main/res",
+flags.DEFINE_string("eval_folder", "/root/TWCT/TWCT/res",
                     "The folder name for storing evaluation results")
 flags.mark_flags_as_required(["workdir", "config", "mode"])
 
