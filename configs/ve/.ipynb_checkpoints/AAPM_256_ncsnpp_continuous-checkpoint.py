@@ -17,7 +17,7 @@ def get_config():
   # data
   data = config.data
   data.dataset = 'AAPM'
-  data.root = 'C:/Users/Admin/Desktop/MBIR/DiffusionMBIR-main/data/CT/AAPM'
+  data.root = '/root/TWCT/TWCT/data/CT/AAPM'
   data.is_complex = False
   data.is_multi = False
   data.image_size = 256
